@@ -1,4 +1,4 @@
-const mensDoctor = ['Urologist', 'Geriatrician'];
+const mensDoctor = ['Urologist', 'Geriatrician', 'Venereologist'];
 const wemansDoctor = ['Gynecologist', 'Mammologist', 'Obstetrician'];
 
 // NOTE: function add gender to speciality.

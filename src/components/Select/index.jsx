@@ -11,7 +11,14 @@ const customStyles = {
   }),
 };
 
-const FormSelect = ({ form, field, onChange, disabled = false, ...props }) => {
+const FormSelect = ({
+  form,
+  field,
+  onChange,
+  disabled = false,
+  autoSelectCityAndSpeciality,
+  ...props
+}) => {
   const changeField = (option) => {
     props?.handleSelectValue && props.handleSelectValue(option);
 
@@ -21,12 +28,11 @@ const FormSelect = ({ form, field, onChange, disabled = false, ...props }) => {
       !form.values.doctorSpeciality.length &&
       !form.values.city.length
     ) {
-      const { doctorsCity, doctorSpeciality } =
-        props?.autoSelectCityAndSpeciality(
-          option,
-          props?.cities,
-          props?.doctorSpecialities,
-        );
+      const { doctorsCity, doctorSpeciality } = autoSelectCityAndSpeciality(
+        option,
+        props?.cities,
+        props?.doctorSpecialities,
+      );
 
       form.setFieldValue('city', doctorsCity);
       form.setFieldValue('doctorSpeciality', doctorSpeciality);

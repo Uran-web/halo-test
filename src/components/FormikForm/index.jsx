@@ -10,7 +10,12 @@ import clsx from 'clsx';
 import CustomDatePicker from '../CustomDatePicker';
 import { format } from 'date-fns';
 
-import { getCities, getDoctors, getDoctorSpeciality } from '../../store/store';
+import {
+  getCities,
+  getDoctors,
+  getDoctorSpeciality,
+  sendUserData,
+} from '../../store/store';
 import {
   autoSelectCityAndSpeciality,
   getFilteredDoctors,
@@ -22,6 +27,7 @@ import FormInput from '../InputField';
 import { wrapperStyles } from './styles';
 
 const handleSubmit = (values) => {
+  sendUserData(values);
   // eslint-disable-next-line no-console
   alert('Successfully created appointment!');
 };
@@ -42,6 +48,8 @@ const sexOptions = [
   { value: 'Female', label: 'Female' },
 ];
 
+///////////////////////////////////////  Validation block //////////////////////////////
+
 // All validations should be moved to separate file
 const validateEmail = (value) => {
   let errors;
@@ -55,7 +63,6 @@ const validateEmail = (value) => {
   return errors;
 };
 
-///////////////////////////////////////  Validation block //////////////////////////////
 const phoneValidation = (value) => {
   let errors;
   if (!/^\+?[0-9]{1,15}$/.test(value)) {
@@ -205,13 +212,15 @@ const FormikForm = ({ classes }) => {
     return filteredSpecialitiesList;
   });
 
+  // console.log('filteredSpecialities', filteredSpecialities);
+
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={handleSubmit}
       enableReinitialize
     >
-      {({ values, errors, handleSubmit, resetForm, dirty }) => {
+      {({ errors, handleSubmit, resetForm }) => {
         const birthdayDateCN = clsx(
           classes.userInfoFields,
           classes.birthdayField,
@@ -321,7 +330,7 @@ const FormikForm = ({ classes }) => {
               <Field
                 name={'doctorSpeciality'}
                 component={FormSelect}
-                options={doctorSpecialities}
+                options={filteredSpecialities && filteredSpecialities}
                 className={classes.medicalServicesFields}
                 placeholder={'Speciality'}
                 handleSelectValue={handleSelectSpeciality}

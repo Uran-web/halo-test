@@ -41,3 +41,7 @@ export const getDoctors = async () => {
   // NOTE: function will add value and label fields
   return addLabelAndValue(addFullName);
 };
+
+export const sendUserData = () => {
+  return 'here is should be endpoint';
+};
