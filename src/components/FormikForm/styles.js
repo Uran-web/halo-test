@@ -61,6 +61,10 @@ export const wrapperStyles = createStyles((theme) => ({
     borderRadius: 5,
 
     zIndex: 2,
+
+    '@media(max-width: 320px)': {
+      width: 240,
+    },
   },
   birthdayFieldError: {
     borderColor: theme.palette.customColors.errorRed,
@@ -68,6 +72,10 @@ export const wrapperStyles = createStyles((theme) => ({
   formSelect: {
     width: 300,
     color: theme.palette.primary.main,
+
+    '@media(max-width: 320px)': {
+      width: 240,
+    },
   },
 
   formSelectError: {
@@ -110,6 +118,10 @@ export const wrapperStyles = createStyles((theme) => ({
   medicalServicesFields: {
     height: 40,
     width: 300,
+
+    '@media(max-width: 320px)': {
+      width: 240,
+    },
   },
   buttonContainer: {
     display: 'flex',
