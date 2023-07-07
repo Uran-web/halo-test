@@ -7,8 +7,11 @@ export const wrapperStyles = createStyles((theme) => ({
     background: theme.palette.primary.layoutBackground,
     overflow: 'auto',
 
-    '@media(max-width: 320px)': {
+    '@media(max-width: 538px)': {
       padding: '20px 20px',
+    },
+    '@media(max-height: 710px)': {
+      padding: '20px 80px',
     },
   },
 }));

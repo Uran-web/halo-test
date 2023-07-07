@@ -161,6 +161,10 @@ theme = createTheme(theme, {
           '&:focus': {
             borderColor: theme.palette.primary.main,
           },
+
+          [theme.breakpoints.down(538)]: {
+            width: 240,
+          },
         },
       },
     },

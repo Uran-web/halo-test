@@ -62,7 +62,7 @@ export const wrapperStyles = createStyles((theme) => ({
 
     zIndex: 2,
 
-    '@media(max-width: 320px)': {
+    '@media(max-width: 538px)': {
       width: 240,
     },
   },
@@ -73,7 +73,7 @@ export const wrapperStyles = createStyles((theme) => ({
     width: 300,
     color: theme.palette.primary.main,
 
-    '@media(max-width: 320px)': {
+    '@media(max-width: 538px)': {
       width: 240,
     },
   },
@@ -103,6 +103,14 @@ export const wrapperStyles = createStyles((theme) => ({
       height: '20px',
       fontWeight: 300,
     },
+
+    // '@media(max-width: 538px)': {
+    //   width: 240,
+    // },
+
+    [theme.breakpoints.down(538)]: {
+      width: 240,
+    },
   },
 
   medicalServices: {
@@ -119,7 +127,7 @@ export const wrapperStyles = createStyles((theme) => ({
     height: 40,
     width: 300,
 
-    '@media(max-width: 320px)': {
+    '@media(max-width: 538px)': {
       width: 240,
     },
   },
