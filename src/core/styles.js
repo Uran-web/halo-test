@@ -11,7 +11,7 @@ export const wrapperStyles = createStyles((theme) => ({
       padding: '20px 20px',
     },
     '@media(max-height: 710px)': {
-      padding: '20px 80px',
+      padding: '20px 20px',
     },
   },
 }));
