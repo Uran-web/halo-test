@@ -60,7 +60,6 @@ theme = createTheme(theme, {
     MuiCssBaseline: {
       styleOverrides: {
         '@global': {
-          // '@font-face': [fontRegular, fontLight, fontBold, fontMedium],
           html: {
             color: theme.palette.customColors.black,
             fontSize: 10,
@@ -116,7 +115,6 @@ theme = createTheme(theme, {
       styleOverrides: {
         root: {
           height: 40,
-          // background: theme.palette.secondary.background,
           background: '#ffffff',
           '&$focused .MuiIconButton': {
             borderColor: theme.palette.primary.main,
@@ -128,7 +126,6 @@ theme = createTheme(theme, {
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          // backgroundColor: theme.palette.secondary.background,
           backgroundColor: '#ffffff',
           fontFamily: 'Roboto',
           caretColor: theme.palette.primary.main,

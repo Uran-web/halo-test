@@ -4,7 +4,6 @@ export const wrapperStyles = createStyles((theme) => ({
   formWrapper: {
     padding: '30px 20px',
     maxWidth: 540,
-    height: '100%',
     border: `1px solid ${theme.palette.customColors.transparentGray}`,
     borderRadius: 5,
     backgroundColor: theme.palette.primary.inverse,
@@ -44,21 +43,29 @@ export const wrapperStyles = createStyles((theme) => ({
     },
   },
   userInfoFields: {
-    height: 40,
     maxWidth: 300,
 
     '& > p': {
       marginTop: 0,
-      marginBottom: 3,
+      marginBottom: -12,
       height: '20px',
       fontWeight: 300,
     },
+
+    '& > div > input': {
+      padding: '9px 10px',
+    },
+  },
+
+  datePicker: {
+    padding: '9px 10px',
   },
 
   birthdayField: {
     width: 300,
     border: `1px solid ${theme.palette.secondary.gray}`,
     borderRadius: 5,
+    height: 40,
 
     zIndex: 2,
 
@@ -94,7 +101,6 @@ export const wrapperStyles = createStyles((theme) => ({
   },
 
   userContactInfoField: {
-    height: 40,
     maxWidth: 300,
 
     '& > p': {
@@ -104,9 +110,9 @@ export const wrapperStyles = createStyles((theme) => ({
       fontWeight: 300,
     },
 
-    // '@media(max-width: 538px)': {
-    //   width: 240,
-    // },
+    '& > div > input': {
+      padding: '9px 10px',
+    },
 
     [theme.breakpoints.down(538)]: {
       width: 240,
@@ -161,7 +167,6 @@ export const wrapperStyles = createStyles((theme) => ({
     opacity: 0.2,
   },
   divider: {
-    marginTop: '10px',
-    width: 300,
+    color: theme.palette.secondary.gray,
   },
 }));

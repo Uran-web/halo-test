@@ -1,13 +1,4 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Formik, Form, Field } from 'formik';
-import { Box } from '@mui/material';
-import { withStyles } from '@mui/styles';
-import Divider from '@mui/material/Divider';
-import { AddCircleOutlineOutlined } from '@mui/icons-material';
-import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
-import { IconButton } from '@mui/material';
-import clsx from 'clsx';
-import CustomDatePicker from '../CustomDatePicker';
 import { format } from 'date-fns';
 
 import {
@@ -15,16 +6,10 @@ import {
   getDoctors,
   getDoctorSpeciality,
   sendUserData,
-} from '../../store/store';
-import {
-  autoSelectCityAndSpeciality,
-  getFilteredDoctors,
-} from '../../utils/doctorFormHelpers';
+} from 'store/store';
+import { getFilteredDoctors } from 'utils/doctorFormHelpers';
 
-import FormSelect from '../Select';
-import FormInput from '../InputField';
-
-import { wrapperStyles } from './styles';
+import UserForm from './Forms/UserForm';
 
 const handleSubmit = (values) => {
   sendUserData(values);
@@ -32,6 +17,7 @@ const handleSubmit = (values) => {
   alert('Successfully created appointment!');
 };
 
+// NOTE: initial values will be apply to the form
 const initialValues = {
   name: '',
   birthdayDate: '',
@@ -111,7 +97,7 @@ const doctorNameValidation = (value) => {
 };
 ///////////////////////////////////////  end of validation block //////////////////////////////
 
-const FormikForm = ({ classes }) => {
+const FormikForm = () => {
   const [cities, setCities] = useState(null);
   const [doctorSpecialities, setDoctorSpecialities] = useState(null);
   const [doctors, setDoctors] = useState(null);
@@ -212,154 +198,34 @@ const FormikForm = ({ classes }) => {
     return filteredSpecialitiesList;
   });
 
-  // console.log('filteredSpecialities', filteredSpecialities);
-
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={handleSubmit}
-      enableReinitialize
-    >
-      {({ errors, handleSubmit, resetForm }) => {
-        const birthdayDateCN = clsx(
-          classes.userInfoFields,
-          classes.birthdayField,
-          {
-            [classes.birthdayFieldError]: errors.birthdayDate,
-          },
-        );
-
-        const sexFieldCN = clsx(classes.formSelect, {
-          [classes.formSelectError]: errors.sex,
-        });
-
-        const cityFieldCN = clsx(classes.medicalServicesFields, {
-          [classes.formSelectError]: errors.city,
-        });
-        const doctorNameFieldCN = clsx(classes.medicalServicesFields, {
-          [classes.formSelectError]: errors.doctorName,
-        });
-
-        const buttonStyles = clsx(classes.submitButton, {
-          [classes.disabledButton]: Object.keys(errors)?.length,
-        });
-        return (
-          <Form className={classes.formWrapper}>
-            <Box className={classes.title}>
-              <div className={classes.titleName}>
-                <AddCircleOutlineOutlined
-                  className={classes.iconStyle}
-                  style={{ height: 32, width: 32 }}
-                />
-                <h1 className={classes.titleText}>Doctor appointment</h1>
-              </div>
-              <IconButton
-                onClick={() => {
-                  resetForm();
-                  handleClearState();
-                }}
-              >
-                <ClearOutlinedIcon className={classes.closeIcon} />
-              </IconButton>
-            </Box>
-            <Divider orientation={'horizontal'} />
-            <Box className={classes.userInfo}>
-              <Field
-                name={'name'}
-                label={'Full name'}
-                placeholder={'Full name'}
-                component={FormInput}
-                className={classes.userInfoFields}
-                validate={nameExceptions}
-                required={true}
-              />
-              <Field
-                name={'birthdayDate'}
-                label={'Birthday date'}
-                component={CustomDatePicker}
-                className={birthdayDateCN}
-                getDate={changeBirthday}
-                required={true}
-                validate={birthdayValidation}
-              />
-              <Field
-                name={'sex'}
-                component={FormSelect}
-                options={sexOptions}
-                className={sexFieldCN}
-                placeholder={'Sex'}
-                required={true}
-                handleSelectValue={handleSelectGender}
-                validate={sexValidation}
-              />
-            </Box>
-            <Box className={classes.userContactInfo}>
-              <Field
-                name={'email'}
-                label={'Email address'}
-                placeholder={'Email address'}
-                component={FormInput}
-                type={'mail'}
-                className={classes.userContactInfoField}
-                validate={validateEmail}
-                required={true}
-              />
-              <Field
-                name={'phoneNumber'}
-                label={'Mobile number'}
-                placeholder={'Mobile number'}
-                component={FormInput}
-                className={classes.userContactInfoField}
-                validate={phoneValidation}
-                required={true}
-              />
-            </Box>
-            <Box className={classes.medicalServices}>
-              <Field
-                name={'doctorName'}
-                component={FormSelect}
-                options={filteredDoctors ? filteredDoctors : doctors}
-                className={doctorNameFieldCN}
-                placeholder={'Doctor name'}
-                required={true}
-                autoSelectCityAndSpeciality={autoSelectCityAndSpeciality}
-                cities={cities}
-                doctorSpecialities={doctorSpecialities}
-                validate={doctorNameValidation}
-              />
-              <Field
-                name={'doctorSpeciality'}
-                component={FormSelect}
-                options={filteredSpecialities && filteredSpecialities}
-                className={classes.medicalServicesFields}
-                placeholder={'Speciality'}
-                handleSelectValue={handleSelectSpeciality}
-              />
-              <Field
-                name={'city'}
-                component={FormSelect}
-                options={cities}
-                className={cityFieldCN}
-                placeholder={'City'}
-                required={true}
-                handleSelectValue={handleSelectCity}
-                validate={cityValidation}
-              />
-            </Box>
-            <Box className={classes.buttonContainer}>
-              <button
-                className={buttonStyles}
-                type="submit"
-                onClick={handleSubmit}
-              >
-                Submit
-              </button>
-            </Box>
-          </Form>
-        );
+    <UserForm
+      initValues={initialValues}
+      submitForm={handleSubmit}
+      specialties={filteredSpecialities}
+      sexOptions={sexOptions}
+      validation={{
+        validateEmail: validateEmail,
+        phoneValidation: phoneValidation,
+        nameExceptions: nameExceptions,
+        birthdayValidation: birthdayValidation,
+        sexValidation: sexValidation,
+        cityValidation: cityValidation,
+        doctorNameValidation: doctorNameValidation,
       }}
-    </Formik>
+      cities={cities}
+      doctorSpecialities={doctorSpecialities}
+      doctors={doctors}
+      handlers={{
+        changeBirthday: changeBirthday,
+        handleSelectCity: handleSelectCity,
+        handleSelectSpeciality: handleSelectSpeciality,
+        handleSelectGender: handleSelectGender,
+        handleClearState: handleClearState,
+      }}
+      filteredDoctors={filteredDoctors}
+    />
   );
 };
 
-export default withStyles(wrapperStyles)(FormikForm);
+export default FormikForm;

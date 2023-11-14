@@ -1,4 +1,4 @@
-import FormikForm from '../components/FormikForm';
+import FormikForm from 'components/FormikForm';
 import { Box } from '@mui/material';
 import 'normalize.css';
 import { withStyles } from '@mui/styles';
