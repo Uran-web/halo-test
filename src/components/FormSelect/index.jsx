@@ -1,13 +1,10 @@
 import Select from 'react-select';
 
-export const SimpleSelect = ({ ...props }) => {
-  return <Select {...props} />;
-};
-
 const customStyles = {
   menu: (styles) => ({
     ...styles,
-    zIndex: 9999,
+    // This solution is not the best. And in production it should be replace on more appropriate way
+    zIndex: 2,
   }),
 };
 
@@ -43,7 +40,7 @@ const FormSelect = ({
   };
 
   return (
-    <SimpleSelect
+    <Select
       {...props}
       {...field}
       disable={disabled}

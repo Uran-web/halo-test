@@ -9,7 +9,7 @@ import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 
 import CustomDatePicker from 'components/CustomDatePicker';
 import FormInput from 'components/InputField';
-import FormSelect from 'components/Select';
+import FormSelect from 'components/FormSelect';
 
 import { autoSelectCityAndSpeciality } from 'utils/doctorFormHelpers';
 
@@ -19,36 +19,29 @@ const UserForm = ({
   classes,
   initValues,
   submitForm,
-  specialties,
   sexOptions,
-  validation,
   cities,
   doctorSpecialities,
   doctors,
-  handlers,
-  filteredDoctors,
+  validationField,
+  filterDoctors,
+  filterSpecialities,
 }) => {
-  const {
-    validateEmail,
-    phoneValidation,
-    nameExceptions,
-    birthdayValidation,
-    sexValidation,
-    cityValidation,
-    doctorNameValidation,
-  } = validation;
-
-  const {
-    changeBirthday,
-    handleSelectCity,
-    handleSelectSpeciality,
-    handleSelectGender,
-    handleClearState,
-  } = handlers;
-
   return (
     <Formik initialValues={initValues} onSubmit={submitForm} enableReinitialize>
-      {({ errors, handleSubmit, resetForm }) => {
+      {({ values, errors, handleSubmit, resetForm }) => {
+        const currentDoctors = filterDoctors(
+          values.birthdayDate,
+          values.city,
+          values.doctorSpeciality,
+          doctors,
+        );
+
+        const currentSpecialities = filterSpecialities(
+          values.sex,
+          doctorSpecialities,
+        );
+
         // NOTE: styles for validation field
         const birthdayDateCN = clsx(classes.datePicker, classes.birthdayField, {
           [classes.birthdayFieldError]: errors.birthdayDate,
@@ -83,7 +76,6 @@ const UserForm = ({
               <IconButton
                 onClick={() => {
                   resetForm();
-                  handleClearState();
                 }}
               >
                 <ClearOutlinedIcon className={classes.closeIcon} />
@@ -101,7 +93,13 @@ const UserForm = ({
                 placeholder={'Full name'}
                 component={FormInput}
                 className={classes.userInfoFields}
-                validate={nameExceptions}
+                validate={(e) =>
+                  validationField(
+                    e,
+                    /^[a-zA-ZÀ-ú\s]+$/,
+                    'Name should contain only letters',
+                  )
+                }
                 required={true}
               />
               <Field
@@ -109,9 +107,10 @@ const UserForm = ({
                 label={'Birthday date'}
                 component={CustomDatePicker}
                 className={birthdayDateCN}
-                getDate={changeBirthday}
                 required={true}
-                validate={birthdayValidation}
+                validate={(e) =>
+                  validationField(e, /^$/, 'Birthday date is mandatory')
+                }
               />
               <Field
                 name={'sex'}
@@ -120,8 +119,7 @@ const UserForm = ({
                 className={sexFieldCN}
                 placeholder={'Sex'}
                 required={true}
-                handleSelectValue={handleSelectGender}
-                validate={sexValidation}
+                validate={(e) => validationField(e, /^$/, 'Sex is mandatory')}
               />
             </Box>
             <Box className={classes.userContactInfo}>
@@ -132,7 +130,14 @@ const UserForm = ({
                 component={FormInput}
                 type={'mail'}
                 className={classes.userContactInfoField}
-                validate={validateEmail}
+                validate={(e) =>
+                  validationField(
+                    e,
+                    //eslint-disable-next-line
+                    /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                    'Email should contain correct format',
+                  )
+                }
                 required={true}
               />
               <Field
@@ -141,7 +146,13 @@ const UserForm = ({
                 placeholder={'Mobile number'}
                 component={FormInput}
                 className={classes.userContactInfoField}
-                validate={phoneValidation}
+                validate={(e) =>
+                  validationField(
+                    e,
+                    /^\+?[0-9]{1,15}$/,
+                    'Phone should contain only numbers and',
+                  )
+                }
                 required={true}
               />
             </Box>
@@ -149,22 +160,22 @@ const UserForm = ({
               <Field
                 name={'doctorName'}
                 component={FormSelect}
-                options={filteredDoctors ? filteredDoctors : doctors}
+                options={currentDoctors}
                 className={doctorNameFieldCN}
                 placeholder={'Doctor name'}
                 required={true}
                 autoSelectCityAndSpeciality={autoSelectCityAndSpeciality}
                 cities={cities}
-                doctorSpecialities={doctorSpecialities}
-                validate={doctorNameValidation}
+                validate={(e) =>
+                  validationField(e, /^$/, 'Select the doctor name')
+                }
               />
               <Field
                 name={'doctorSpeciality'}
                 component={FormSelect}
-                options={specialties && specialties}
+                options={currentSpecialities}
                 className={classes.medicalServicesFields}
                 placeholder={'Speciality'}
-                handleSelectValue={handleSelectSpeciality}
               />
               <Field
                 name={'city'}
@@ -173,8 +184,7 @@ const UserForm = ({
                 className={cityFieldCN}
                 placeholder={'City'}
                 required={true}
-                handleSelectValue={handleSelectCity}
-                validate={cityValidation}
+                validate={(e) => validationField(e, /^$/, 'SCity is mandatory')}
               />
             </Box>
             <Box className={classes.buttonContainer}>

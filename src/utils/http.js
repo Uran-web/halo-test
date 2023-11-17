@@ -1,4 +1,5 @@
 import { baseURL } from 'constants/httpConstants';
+import { toast } from 'react-toastify';
 
 // NOTE: fetch function accept object that includes:
 // endpoint, method, headers, body, params
@@ -8,6 +9,7 @@ export const fetchData = async ({
   headers = {},
   body = null,
   params = {},
+  notification = null,
 }) => {
   // create new url based on constant url and endpoint
   const url = new URL(`${baseURL}/${endpoint}`);
@@ -34,10 +36,11 @@ export const fetchData = async ({
 
   // if any error occurs it will be throw with current status
   if (!response.ok) {
-    throw new Error(`Failed to fetch. Status: ${response.status}`);
+    toast(notification ? notification.error.message : 'Failed to fetch data');
   }
 
-  // return response
   const data = await response.json();
+
+  toast(notification ? notification.success.message : 'Successfully fetched');
   return data;
 };

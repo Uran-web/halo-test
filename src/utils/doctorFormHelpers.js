@@ -1,5 +1,3 @@
-// NOTE: Function accept three arg array. Filtering cities and specialities by doctor
-// and return object with two params.
 export const autoSelectCityAndSpeciality = (
   doctorData,
   cities,
@@ -13,8 +11,6 @@ export const autoSelectCityAndSpeciality = (
   return { doctorsCity, doctorSpeciality };
 };
 
-// NOTE: Function accept three arg, arr, object with params, and stirng with age.
-// return filterd array with doctors
 export const getFilteredDoctors = (doctorsArr, filterParams, patientAge) => {
   let filteredDoctors = doctorsArr;
 
@@ -24,11 +20,9 @@ export const getFilteredDoctors = (doctorsArr, filterParams, patientAge) => {
       filteredDoctors.filter((doctor) => {
         if (doctor.isPediatrician && patientAge < 18) {
           return true;
+        } else {
+          return false;
         }
-        if (!doctor.isPediatrician && patientAge >= 18) {
-          return true;
-        }
-        return false;
       });
   }
 

@@ -31,23 +31,19 @@ let theme = createTheme({
       fontWeight: 500,
     },
     h1: {
-      fontFamily: 'Roboto',
       fontSize: '48px',
       fontWeight: 800,
     },
     h2: {
-      fontFamily: 'Roboto',
       fontSize: '48px',
       fontWeight: 800,
     },
 
     h3: {
-      fontFamily: 'Roboto',
       fontSize: '24px',
       fontWeight: 700,
     },
     caption: {
-      fontFamily: 'Roboto',
       fontSize: '14px',
       fontWeight: 700,
     },
@@ -99,8 +95,8 @@ theme = createTheme(theme, {
           margin: '0 auto',
           borderRadius: '30px',
           '&:hover': {
-            background: '#FFFFFF',
-            backgroundColor: 'FFFFFF',
+            background: theme.palette.primary.inverse,
+            backgroundColor: theme.palette.primary.inverse,
             border: `1px solid ${theme.palette.secondary.main}`,
             color: theme.palette.secondary.main,
           },
@@ -115,10 +111,10 @@ theme = createTheme(theme, {
       styleOverrides: {
         root: {
           height: 40,
-          background: '#ffffff',
+          background: theme.palette.primary.inverse,
           '&$focused .MuiIconButton': {
             borderColor: theme.palette.primary.main,
-            backgroundColor: 'white',
+            backgroundColor: theme.palette.primary.inverse,
           },
         },
       },
@@ -126,7 +122,7 @@ theme = createTheme(theme, {
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          backgroundColor: '#ffffff',
+          backgroundColor: theme.palette.primary.inverse,
           fontFamily: 'Roboto',
           caretColor: theme.palette.primary.main,
 

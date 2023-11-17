@@ -1,9 +1,6 @@
 const mensDoctor = ['Urologist', 'Geriatrician', 'Venereologist'];
 const wemansDoctor = ['Gynecologist', 'Mammologist', 'Obstetrician'];
 
-// NOTE: function add gender to speciality.
-// accept array with object.
-// Return new array.
 export const addGenderToSpeciality = (array) => {
   const updatedArray = array?.map((spec) => {
     if (spec?.params?.minAge || spec?.params?.maxAge) {
@@ -11,7 +8,7 @@ export const addGenderToSpeciality = (array) => {
     }
 
     if (!spec?.params?.gender) {
-      const genderSpec = mensDoctor.find((el) => el === spec?.name)
+      const genderSpec = mensDoctor.some((el) => el === spec?.name)
         ? 'Male'
         : wemansDoctor?.find((el) => el === spec?.name) && 'Female';
 

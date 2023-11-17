@@ -1,15 +1,21 @@
-import FormikForm from 'components/FormikForm';
 import { Box } from '@mui/material';
-import 'normalize.css';
 import { withStyles } from '@mui/styles';
+import { ToastContainer } from 'react-toastify';
+import FormikForm from 'components/FormikForm';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 import { wrapperStyles } from './styles';
 
 const App = ({ classes }) => {
   return (
-    <Box className={classes.mainWrapper}>
-      <FormikForm />
-    </Box>
+    <>
+      <Box className={classes.mainWrapper}>
+        <FormikForm />
+      </Box>
+
+      <ToastContainer />
+    </>
   );
 };
 

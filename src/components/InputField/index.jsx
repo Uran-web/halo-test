@@ -6,7 +6,6 @@ const FormInput = ({
   field,
   externalError = null,
   type = 'text',
-  disabled,
   className,
   ...props
 }) => {
@@ -20,19 +19,19 @@ const FormInput = ({
 
   const hasError =
     externalError === null
-      ? Boolean(get(touched, field.name) && get(errors, field.name))
-      : Boolean(externalError);
+      ? !!(get(touched, field.name) && get(errors, field.name))
+      : !!externalError;
   const helperText = hasError ? get(errors, field.name) : undefined;
 
   return (
     <TextField
+      // NOTE: mixed props from different places is not good idea. However, as a simple example it will be appropriate
       {...field}
       {...props}
       type={type}
       onChange={handleChange}
-      helperText={props.helperText ? props.helperText : helperText}
+      helperText={props.helperText || helperText}
       error={hasError}
-      disabled={disabled}
       className={className}
     />
   );
