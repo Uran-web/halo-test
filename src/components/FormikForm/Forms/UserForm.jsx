@@ -184,7 +184,7 @@ const UserForm = ({
                 className={cityFieldCN}
                 placeholder={'City'}
                 required={true}
-                validate={(e) => validationField(e, /^$/, 'SCity is mandatory')}
+                validate={(e) => validationField(e, /^$/, 'City is mandatory')}
               />
             </Box>
             <Box className={classes.buttonContainer}>
